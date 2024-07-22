@@ -3,12 +3,11 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.WebHost.ConfigureKestrel(serverOptions =>
+// Listen on the port provided by Heroku
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+builder.WebHost.UseKestrel(serverOptions =>
 {
-    serverOptions.ListenAnyIP(5000, listenOptions =>
-    {
-        listenOptions.UseHttps(); // Ensure you have a valid certificate for HTTPS
-    });
+    serverOptions.ListenAnyIP(int.Parse(port));
 });
 
 builder.Services.AddControllers();
