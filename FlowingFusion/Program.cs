@@ -3,13 +3,20 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(5000, listenOptions =>
+    {
+        listenOptions.UseHttps(); // Ensure you have a valid certificate for HTTPS
+    });
+});
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 
-    // Set the comments path for the Swagger JSON and UI.
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
@@ -27,12 +34,8 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = string.Empty;
     });
 }
-else
-{
-    // Only in non-development environments, use HTTPS redirection
-    app.UseHttpsRedirection();
-}
 
+app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
-app.Run("https://localhost:5000");
+app.Run();
