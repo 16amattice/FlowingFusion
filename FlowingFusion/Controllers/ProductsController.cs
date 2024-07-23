@@ -1,9 +1,11 @@
 ﻿using FlowingFusion.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace FlowingFusion.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ProductsController : ControllerBase

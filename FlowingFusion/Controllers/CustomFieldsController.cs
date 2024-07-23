@@ -1,10 +1,12 @@
 ﻿using FlowingFusion.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace FlowingFusion.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("products/{productId}/custom_fields")]
     [Tags("Custom Fields")]

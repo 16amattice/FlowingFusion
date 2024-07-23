@@ -1,8 +1,10 @@
 ﻿using FlowingFusion.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlowingFusion.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     [Tags("Licenses")]
