@@ -34,7 +34,8 @@ FirebaseApp.Create(new AppOptions()
 {
     Credential = GoogleCredential.FromFile(serviceAccountKeyPath),
 });
-// Add services to the container.
+
+// Add services to the container
 builder.Services.AddControllers();
 builder.Services.AddCors(options =>
 {
@@ -46,13 +47,13 @@ builder.Services.AddCors(options =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.Authority = "https://securetoken.google.com/flowingfusion-2019a";
+        options.Authority = $"https://securetoken.google.com/{firebaseProjectId}";
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
-            ValidIssuer = "https://securetoken.google.com/flowingfusion-2019a",
+            ValidIssuer = $"https://securetoken.google.com/{firebaseProjectId}",
             ValidateAudience = true,
-            ValidAudience = "flowingfusion-2019a",
+            ValidAudience = firebaseProjectId,
             ValidateLifetime = true
         };
     });
@@ -87,7 +88,7 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -114,7 +115,7 @@ app.UseEndpoints(endpoints =>
 app.UseReDoc(c =>
 {
     c.SpecUrl = "/swagger/v1/swagger.json";
-    c.RoutePrefix = ""; // This will make ReDoc available at /redoc
+    c.RoutePrefix = "redoc"; // This will make ReDoc available at /redoc
 });
 
 app.Run();
