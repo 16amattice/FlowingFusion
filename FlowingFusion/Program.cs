@@ -104,18 +104,13 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
-    endpoints.MapControllers();
-    endpoints.MapGet("/", async context =>
-    {
-        context.Response.Redirect("/redoc");
-        await Task.CompletedTask;
-    }).AllowAnonymous();
+    endpoints.MapControllers().AllowAnonymous();
 });
 
 app.UseReDoc(c =>
 {
     c.SpecUrl = "/swagger/v1/swagger.json";
-    c.RoutePrefix = "redoc"; // This will make ReDoc available at /redoc
+    c.RoutePrefix = "";
 });
 
 app.Run();
