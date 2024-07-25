@@ -102,7 +102,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers().AllowAnonymous();
+app.MapControllers();
 
 
 app.UseReDoc(c =>
