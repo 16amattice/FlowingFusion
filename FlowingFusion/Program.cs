@@ -102,10 +102,8 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers().AllowAnonymous();
-});
+app.MapControllers().AllowAnonymous();
+
 
 app.UseReDoc(c =>
 {
